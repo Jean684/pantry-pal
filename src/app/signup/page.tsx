@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -9,8 +11,69 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  const [successMessage, setSuccessMessage] = useState("");
+
+
+  async function handleSignup(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setError("");
+    setSuccessMessage("");
+
+    if (!email || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    setLoading(true);
+
+    //console.log("Signup form submitted with:", { email, password, confirmPassword });
+    try {
+      const supabase = await createClient();
+
+      const { error: signupError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (signupError) {
+        setError(signupError.message);
+        return;
+      }
+
+      setSuccessMessage("Account created! Check your email to confirm your account before logging in.");
+
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+
+
+  } catch (error) {
+    setError("An unexpected error occurred.");
+  } finally { 
+    setLoading(false);
+  }
+}
+
   return (
     <Box
       minH="100vh"
@@ -64,6 +127,7 @@ export default function SignupPage() {
               </Text>
             </Stack>
 
+          <form onSubmit={handleSignup}>
             <Stack gap="4">
               <Field.Root required>
                 <Field.Label>Email</Field.Label>
@@ -72,6 +136,8 @@ export default function SignupPage() {
                   placeholder="you@example.com"
                   size="lg"
                   borderRadius="lg"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Field.Root>
 
@@ -82,6 +148,8 @@ export default function SignupPage() {
                   placeholder="Enter your password"
                   size="lg"
                   borderRadius="lg"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Field.Root>
 
@@ -92,20 +160,33 @@ export default function SignupPage() {
                   placeholder="Confirm your password"
                   size="lg"
                   borderRadius="lg"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Field.Root>
 
+              {error && (
+                <Text color="red.500" fontSize="sm">
+                  {error}
+                </Text>
+              )}
+
+              {successMessage && (
+                <Text color="green.500" fontSize="sm">
+                  {successMessage}
+                </Text>
+              )}
+
               <Button
-                size="lg"
-                width="full"
-                borderRadius="lg"
-                bg="rgb(213, 137, 54)"
-                color="white"
-                _hover={{ bg: "rgb(164, 66, 0)" }}
+                type="submit"
+                loading={loading}
+
               >
                 Create account
               </Button>
             </Stack>
+          </form>
+            
 
             <Text fontSize="sm" color="gray.600">
               Already have an account?{" "}
