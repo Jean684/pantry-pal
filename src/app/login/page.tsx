@@ -60,9 +60,9 @@ export default function LoginPage() {
   return (
     <Box
       minH="100vh"
-      bgImage="url('/Gallery/1.jpg')"
+      bgImage="url('/Gallery/board.jpg')"
       bgSize="cover"
-      bgPosition="center"
+      backgroundPosition="center"
       bgRepeat="no-repeat"
       position="relative"
       display="flex"
@@ -153,7 +153,7 @@ export default function LoginPage() {
                     borderColor="gray.300"
                     _focus={{
                       borderColor: "#D58936",
-                      boxShadow: "0 0 0 1px #D58936",
+                      // boxShadow: "0 0 0 1px #D58936",
                     }}
                   />
                 </Field.Root>

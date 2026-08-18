@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import {
   Box,
@@ -18,10 +19,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   async function handleSignup(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,9 +45,8 @@ export default function SignupPage() {
 
     setLoading(true);
 
-    //console.log("Signup form submitted with:", { email, password, confirmPassword });
     try {
-      const supabase = await createClient();
+      const supabase = createClient();
 
       const { error: signupError } = await supabase.auth.signUp({
         email,
@@ -60,164 +58,252 @@ export default function SignupPage() {
         return;
       }
 
-      setSuccessMessage("Account created! Check your email to confirm your account before logging in.");
+      setSuccessMessage(
+        "Account created successfully! You can now log in."
+      );
 
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-
-
-  } catch (error) {
-    setError("An unexpected error occurred.");
-  } finally { 
-    setLoading(false);
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
     <Box
       minH="100vh"
-      bg="rgb(60, 21, 24)"
+      bgImage="url('/Gallery/board.jpg')"
+      bgSize="cover"
+      backgroundPosition="center"
+      bgRepeat="no-repeat"
+      position="relative"
       display="flex"
       alignItems="center"
       justifyContent="center"
       px={{ base: "4", md: "6" }}
-      py={{ base: "8", md: "12" }}
+      py={{ base: "6", md: "10" }}
     >
+      {/* Dark overlay over background image */}
       <Box
+        position="absolute"
+        inset="0"
+        bg="rgba(0, 0, 0, 0.35)"
+      />
+
+      {/* Signup card */}
+      <Box
+        position="relative"
+        zIndex="1"
         width="full"
-        maxW="6xl"
-        bg="rgb(255, 253, 252)"
-        borderRadius="3xl"
+        maxW="5xl"
+        bg="#FFFDFC"
+        borderRadius={{ base: "2xl", md: "3xl" }}
         overflow="hidden"
-        boxShadow="0 20px 60px rgba(0, 0, 0, 0.12)"
+        boxShadow="0 24px 70px rgba(0, 0, 0, 0.35)"
         display="grid"
-        gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
-        minH={{ base: "auto", md: "700px" }}
+        gridTemplateColumns={{
+          base: "1fr",
+          md: "1.15fr 0.85fr",
+        }}
+        minH={{ base: "auto", md: "560px" }}
       >
         {/* Left side: signup form */}
         <Box
-          px={{ base: "6", md: "12" }}
-          py={{ base: "8", md: "12" }}
+          px={{ base: "6", sm: "8", md: "12" }}
+          py={{ base: "8", md: "10" }}
           display="flex"
           alignItems="center"
+          justifyContent="center"
         >
           <Stack gap="6" width="full" maxW="md">
+            {/* Branding */}
             <Stack gap="3">
               <Text
                 fontSize="sm"
-                fontWeight="semibold"
-                color="rgb(213, 137, 54)"
-                letterSpacing="wide"
+                fontWeight="bold"
+                color="#D58936"
+                letterSpacing="0.12em"
               >
                 PANTRYPAL
               </Text>
 
               <Heading
                 as="h1"
-                fontSize={{ base: "3xl", md: "5xl" }}
+                fontSize={{ base: "3xl", md: "4xl" }}
                 lineHeight="1.1"
+                color="#3C1518"
               >
                 Welcome to PantryPal!
               </Heading>
 
-              <Text color="gray.600" fontSize={{ base: "md", md: "lg" }}>
-                Create your account and discover recipes based on the ingredients
-                already in your kitchen.
+              <Text
+                color="gray.600"
+                fontSize={{ base: "md", md: "lg" }}
+              >
+                Create your account and discover recipes based on the
+                ingredients already in your kitchen.
               </Text>
             </Stack>
 
-          <form onSubmit={handleSignup}>
-            <Stack gap="4">
-              <Field.Root required>
-                <Field.Label>Email</Field.Label>
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
+            {/* Signup form */}
+            <form onSubmit={handleSignup}>
+              <Stack gap="4">
+                <Field.Root required>
+                  <Field.Label color="#3C1518">
+                    Email
+                  </Field.Label>
+
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    size="lg"
+                    borderRadius="lg"
+                    value={email}
+                    onChange={(event) =>
+                      setEmail(event.target.value)
+                    }
+                    borderColor="gray.300"
+                    _focus={{
+                      borderColor: "#D58936",
+                      boxShadow: "0 0 0 1px #D58936",
+                    }}
+                  />
+                </Field.Root>
+
+                <Field.Root required>
+                  <Field.Label color="#3C1518">
+                    Password
+                  </Field.Label>
+
+                  <Input
+                    type="password"
+                    placeholder="Enter your password"
+                    size="lg"
+                    borderRadius="lg"
+                    value={password}
+                    onChange={(event) =>
+                      setPassword(event.target.value)
+                    }
+                    borderColor="gray.300"
+                    _focus={{
+                      borderColor: "#D58936",
+                      boxShadow: "0 0 0 1px #D58936",
+                    }}
+                  />
+                </Field.Root>
+
+                <Field.Root required>
+                  <Field.Label color="#3C1518">
+                    Confirm password
+                  </Field.Label>
+
+                  <Input
+                    type="password"
+                    placeholder="Confirm your password"
+                    size="lg"
+                    borderRadius="lg"
+                    value={confirmPassword}
+                    onChange={(event) =>
+                      setConfirmPassword(event.target.value)
+                    }
+                    borderColor="gray.300"
+                    _focus={{
+                      borderColor: "#D58936",
+                      boxShadow: "0 0 0 1px #D58936",
+                    }}
+                  />
+                </Field.Root>
+
+                {error && (
+                  <Box
+                    bg="red.50"
+                    border="1px solid"
+                    borderColor="red.200"
+                    borderRadius="lg"
+                    px="3"
+                    py="2"
+                  >
+                    <Text color="red.600" fontSize="sm">
+                      {error}
+                    </Text>
+                  </Box>
+                )}
+
+                {successMessage && (
+                  <Box
+                    bg="green.50"
+                    border="1px solid"
+                    borderColor="green.200"
+                    borderRadius="lg"
+                    px="3"
+                    py="2"
+                  >
+                    <Text color="green.700" fontSize="sm">
+                      {successMessage}
+                    </Text>
+                  </Box>
+                )}
+
+                <Button
+                  type="submit"
                   size="lg"
+                  width="full"
                   borderRadius="lg"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Field.Root>
+                  bg="#D58936"
+                  color="#3C1518"
+                  fontWeight="bold"
+                  _hover={{
+                    bg: "#A44200",
+                    color: "white",
+                  }}
+                  loading={loading}
+                  mt="1"
+                >
+                  Create account
+                </Button>
+              </Stack>
+            </form>
 
-              <Field.Root required>
-                <Field.Label>Password</Field.Label>
-                <Input
-                  type="password"
-                  placeholder="Enter your password"
-                  size="lg"
-                  borderRadius="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Field.Root>
-
-              <Field.Root required>
-                <Field.Label>Confirm password</Field.Label>
-                <Input
-                  type="password"
-                  placeholder="Confirm your password"
-                  size="lg"
-                  borderRadius="lg"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </Field.Root>
-
-              {error && (
-                <Text color="red.500" fontSize="sm">
-                  {error}
-                </Text>
-              )}
-
-              {successMessage && (
-                <Text color="green.500" fontSize="sm">
-                  {successMessage}
-                </Text>
-              )}
-
-              <Button
-                type="submit"
-                loading={loading}
-
-              >
-                Create account
-              </Button>
-            </Stack>
-          </form>
-            
-
-            <Text fontSize="sm" color="gray.600">
+            {/* Login link */}
+            <Text
+              fontSize="sm"
+              color="gray.600"
+              textAlign={{ base: "center", md: "left" }}
+            >
               Already have an account?{" "}
-              <Link href="/login">Log in</Link>
+              <Link href="/login">
+                <Text
+                  as="span"
+                  color="#A44200"
+                  fontWeight="semibold"
+                  _hover={{
+                    color: "#69140E",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Log in
+                </Text>
+              </Link>
             </Text>
           </Stack>
         </Box>
 
-        {/* Right side: image */}
+        {/* Right side: Anime image */}
         <Box
-          bg="#f4e8dc"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          p={{ base: "6", md: "8" }}
+          display={{ base: "none", md: "block" }}
+          height="100%"
         >
-          <Box
-            width="full"
-            height="full"
-            borderRadius="2xl"
-            overflow="hidden"
-            bg="whiteAlpha.700"
-          >
-            <Image
-              src="/images/signup-bg3.jpg"
-              alt="Anime-style cooking scene"
-              width="100%"
-              height="100%"
-              objectFit="cover"
-            />
-          </Box>
+          <Image
+            src="/Gallery/signup-bg3.jpg"
+            alt="Anime-style cooking scene"
+            width="100%"
+            height="100%"
+            objectFit="cover"
+            objectPosition="center"
+          />
         </Box>
       </Box>
     </Box>
