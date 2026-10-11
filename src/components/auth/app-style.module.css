@@ -1,0 +1,81 @@
+.workspace {
+  background: #faf7f2;
+  color: #3c1518;
+}
+.workspace h1, .workspace h2, .workspace h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: -0.035em;
+  color: #3c1518;
+}
+.workspace h1 {
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  line-height: 1.12;
+}
+.workspace input[type='checkbox'] {
+  accent-color: #bd5b12;
+  width: 18px;
+  height: 18px;
+}
+.workspace form button[type='submit'], .primary {
+  background: linear-gradient(115deg, #d58936, #bb5b12) !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(164, 66, 0, 0.1);
+}
+.workspace form button[type='submit']:hover, .primary:hover {
+  background: #a44200 !important;
+}
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: 20px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: -12px;
+  width: 32%;
+  height: 180px;
+  border-radius: 65% 35% 50% 50%;
+  background: linear-gradient(145deg, rgba(239, 219, 187, 0.3), rgba(239, 219, 187, 0.06));
+  pointer-events: none;
+}
+.card {
+  border-radius: 22px !important;
+  border-color: #f0e7dd !important;
+  box-shadow: 0 8px 28px rgba(105, 60, 20, 0.055) !important;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fcebd5;
+  color: #a44200;
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.chip {
+  padding: 5px 9px;
+  border: 1px solid #f0e7dd;
+  border-radius: 9px;
+  background: #fffdfa;
+  color: #795d56;
+  font-size: 12px;
+}
+.missingChip {
+  background: #fae9e3;
+  color: #7d382b;
+  border-color: transparent;
+}
+@media (max-width: 767px) {
+  .hero::before { opacity: 0.5; width: 45%; }
+}

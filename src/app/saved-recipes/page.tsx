@@ -1,10 +1,11 @@
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { AppShell } from "@/components/auth/app-shell";
+import { Heading, Text } from "@chakra-ui/react";
 
 export default function LoginPage() {
   return (
-    <Container maxW="4xl" py="16">
+    <AppShell activePath="/saved-recipes">
       <Heading as="h1">Log in</Heading>
       <Text mt="4">Authentication will be added on Day 2.</Text>
-    </Container>
+    </AppShell>
   );
 }
