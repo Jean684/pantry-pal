@@ -6,6 +6,7 @@ export type Recipe = {
   mealType?: string;
   prepMinutes?: number;
   cookMinutes?: number;
+  image?: string;
 };
 
 export type MatchedRecipe = Recipe & { missingIngredients: string[] };

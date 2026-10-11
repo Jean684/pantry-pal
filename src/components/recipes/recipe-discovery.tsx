@@ -8,6 +8,8 @@ import { AppShell } from "@/components/auth/app-shell";
 import styles from "@/components/auth/app-style.module.css";
 import { LuCheck, LuShoppingCart, LuClock, LuUtensils } from "react-icons/lu";
 import type { MatchedRecipe } from "@/types/recipe";
+import { RecipeImage } from "@/components/recipes/recipe-image";
+import { RecipeDetails } from "@/components/recipes/recipe-details";
 
 const filters = [
   { label: "All", value: "all" },
@@ -52,8 +54,9 @@ export function RecipeDiscovery({ matches, loadFailed, hasStock }: { matches: Ma
                 {visible.map((recipe) => {
                   const missing = recipe.missingIngredients.length;
                   return (
-                    <Box className={styles.card} as="article" key={recipe.id} bg="white" border="1px solid #EEE5DA" borderRadius="2xl" p="5" boxShadow="0 4px 18px rgba(60, 21, 24, 0.04)">
+                    <Box className={styles.card} as="article" key={recipe.id} position="relative" bg="white" border="1px solid #EEE5DA" borderRadius="2xl" p="5" boxShadow="0 4px 18px rgba(60, 21, 24, 0.04)">
                       <Stack gap="3">
+                        <RecipeImage key={recipe.image ?? recipe.id} src={recipe.image} name={recipe.name} />
                         <Stack direction="row" align="start" gap="3"><Box className={styles.icon} w="38px" h="38px"><LuUtensils aria-hidden="true" size={19} /></Box><Heading as="h2" size="xl">{recipe.name}</Heading></Stack>
                         <Text fontSize="sm" color="#795D56">{recipe.description}</Text>
                         <Text display="flex" alignItems="center" gap="2" fontSize="xs" color="#A44200"><LuClock aria-hidden="true" />{[recipe.mealType, recipe.prepMinutes !== undefined ? `${recipe.prepMinutes} min prep` : null, recipe.cookMinutes !== undefined ? `${recipe.cookMinutes} min cook` : null].filter(Boolean).join(" · ")}</Text>
@@ -67,6 +70,7 @@ export function RecipeDiscovery({ matches, loadFailed, hasStock }: { matches: Ma
                           {missing === 0 ? <Text fontSize="sm" color="#36543A" mt="1">None — you have everything listed.</Text> : <Box className={styles.chips}>{recipe.missingIngredients.map((name) => <span className={`${styles.chip} ${styles.missingChip}`} key={name}>{name}</span>)}</Box>}
                         </Box>
                       </Stack>
+                      <RecipeDetails recipe={recipe} />
                     </Box>
                   );
                 })}

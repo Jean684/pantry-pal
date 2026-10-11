@@ -12,7 +12,6 @@ const navigation = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "My Pantry", href: "/ingredients" },
   { label: "Recipes", href: "/recipes" },
-  { label: "Saved Recipes", href: "/saved-recipes" },
 ];
 
 export function AppShell({ activePath, children }: { activePath: string; children: ReactNode }) {
