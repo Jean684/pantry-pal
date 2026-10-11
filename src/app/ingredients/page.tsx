@@ -1,10 +1,10 @@
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { IngredientManager } from "@/components/pantry/ingredient-manager";
 
-export default function LoginPage() {
-  return (
-    <Container maxW="4xl" py="16">
-      <Heading as="h1">Log in</Heading>
-      <Text mt="4">Authentication will be added on Day 2.</Text>
-    </Container>
-  );
+export default async function IngredientsPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+  return <IngredientManager userId={user.id} />;
 }
