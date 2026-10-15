@@ -23,7 +23,7 @@ The idea came from a very normal problem: having food in the kitchen, opening th
 
 ---
 
-## What I'm Building
+## What I'm Building 🧩
 
 PantryPal is designed around a simple flow:
 
@@ -38,11 +38,11 @@ Rather than starting with *"What recipe do I want to make?"*, PantryPal starts w
 
 ---
 
-## Current Progress
+## Current Progress 🚧
 
 ### Working
 
-- User sign up and login
+- User sign-up and login
 - Supabase authentication
 - Authenticated application flow
 - Initial dashboard and application structure
@@ -79,7 +79,7 @@ Rather than starting with *"What recipe do I want to make?"*, PantryPal starts w
 
 ---
 
-## Project Goals
+## Project Goals 🎯
 
 PantryPal is both a product idea and a learning project.
 
@@ -96,7 +96,7 @@ I'm intentionally developing the project feature by feature rather than trying t
 
 ---
 
-## Running Locally
+## Running Locally 💻
 
 Clone the repository:
 
@@ -107,6 +107,6 @@ cd pantry-pal
 
 ---
 
-## Usage
+## Usage 🔒
 
 This repository is a personal portfolio project. The source code is publicly visible for demonstration and review purposes, but no license is granted for copying, modifying, or redistributing the code.
