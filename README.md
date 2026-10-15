@@ -103,3 +103,10 @@ Clone the repository:
 ```bash
 git clone https://github.com/Jean684/pantry-pal
 cd pantry-pal
+```
+
+---
+
+## Usage
+
+This repository is a personal portfolio project. The source code is publicly visible for demonstration and review purposes, but no license is granted for copying, modifying, or redistributing the code.
